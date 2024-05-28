@@ -3,7 +3,9 @@ interface Class<T> {
 }
 
 interface JavaType {
+    /** @deprecated */
     newInstance(...args: any[]): any;
+    __new__(...args: any[]): any;
 }
 
 interface SEWrapper {
@@ -14,6 +16,18 @@ interface SEWrapper {
     getEnumValue(fieldName: string, defaultValue: any): any;
     setEnumValue(fieldName: string, value: any /* java.lang.Enum */): void;
 }
+
+interface JSConsole {
+    log(...data: any): void;
+    warn(...data: any): void;
+    error(...data: any): void;
+    debug(...data: any): void;
+    info(...data: any): void;
+    trace(...data: any): void;
+    verbose(...data: any): void;
+}
+
+declare const console: JSConsole;
 
 declare const currentSide: "core" | "manager";
 
@@ -313,7 +327,7 @@ declare module "networking" {
         url(url: string): RequestBuilder;
         addHeader(name: string, value: string): RequestBuilder;
         removeHeader(name: string): RequestBuilder;
-        method(method: "post" | "get" | "put" | "delete" | "patch", body: string | any): RequestBuilder; // byte[] | java.io.InputStream
+        method(method: "POST" | "GET" | "PUT" | "HEAD" | "DELETE" | "PATCH", body: string | any | undefined /* byte[] | java.io.InputStream | null */): RequestBuilder;
     }
 
     interface Response {
